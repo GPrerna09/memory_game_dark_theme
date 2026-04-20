@@ -13,6 +13,17 @@
             --card-front: #ffffff;
             --text-color: #333333;
             --success-color: #4caf50;
+            --control-bg: #ffffff;
+        }
+
+        /* Dark mode theme */
+        body.dark-mode {
+            --primary-color: #64b5f6;
+            --background-color: #1a1a1a;
+            --card-back: #2c3e50;
+            --card-front: #34495e;
+            --text-color: #ecf0f1;
+            --control-bg: #2a2a2a;
         }
 
         * {
@@ -41,11 +52,31 @@
         .header {
             text-align: center;
             margin-bottom: 2rem;
+            position: relative;
         }
 
         .header h1 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
+        }
+
+        /* Dark mode toggle button */
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: #1565c0;
         }
 
         /* Game controls and statistics panel */
@@ -54,7 +85,7 @@
             justify-content: space-around;
             flex-wrap: wrap;
             gap: 1rem;
-            background: white;
+            background: var(--control-bg);
             padding: 1rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -173,7 +204,8 @@
         }
 
         .modal-content {
-            background: white;
+            background: var(--control-bg);
+            color: var(--text-color);
             padding: 2rem;
             border-radius: 8px;
             text-align: center;
@@ -190,7 +222,7 @@
         .scores-list {
             max-width: 600px;
             margin: 1rem auto;
-            background: white;
+            background: var(--control-bg);
             padding: 1rem;
             border-radius: 8px;
         }
@@ -216,6 +248,7 @@
     <div class="container">
         <!-- Game header with title and instructions -->
         <header class="header">
+            <button class="theme-toggle" id="themeToggle">🌙 Dark Mode</button>
             <h1>Memory Game</h1>
             <p>Match all the pairs to win! Use keyboard or mouse to play.</p>
         </header>
@@ -498,7 +531,32 @@
             });
         });
 
+        // Dark mode toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+
+        // Check for saved theme preference or default to light mode
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('memoryGameTheme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.textContent = '☀️ Light Mode';
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeToggle.textContent = '🌙 Dark Mode';
+            }
+        }
+
+        // Toggle dark mode on button click
+        themeToggle.addEventListener('click', () => {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            const theme = isDarkMode ? 'dark' : 'light';
+            localStorage.setItem('memoryGameTheme', theme);
+            themeToggle.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
         // Initialize game
+        initializeTheme();
         updateScoresList();
         initializeGrid();
     </script>
