@@ -29,3 +29,11 @@ A responsive and accessible Memory (Concentration) card game built with HTML, CS
 - Accessible with ARIA attributes and keyboard controls
 - Local storage for persistent high scores
 
+  ## Use the below Link to run the Game Link in browser:
+
+Link - https://htmlpreview.github.io/
+
+Game Link -
+https://github.com/GPrerna09/memory_game_dark_theme/blob/19e18d295b546114298f9ddb6e
+023acdc7344634/memory-game.html
+
